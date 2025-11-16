@@ -7,32 +7,26 @@
 # 2) Send Lapse exploit and etaHEN payload to PS5 to enable jailbreak.
 
 # PS5 Jailbreak configuration
-GIT_Y2JB_DIR="./github-Y2JB"
-PS5_HEN_DIR="."
+WORK_DIR="/media/dave/20T_MAIN/Primary/proyek/220901 PS5/251020 Jailbreak/WORKDIR_NODELETE"
+GIT_Y2JB_DIR="$WORK_DIR/github-Y2JB"
+HEN_URL="https://github.com/etaHEN/etaHEN/releases/download/2.3B/etaHEN-2.3B.bin"
+
+# PS5 FTP configuration
 PS5_IP="192.168.14.158"
+PS5_FTP_PORT=1337
+PS5_EXPLOIT_PORT=50000
+PS5_HEN_PORT=9021
+
+# Derived folders
+HEN_FILE="$WORK_DIR/$(basename "$HEN_URL")"
 
 # Send the lapse exploit payload
-python3 "$GIT_Y2JB_DIR/payload_sender.py" "$PS5_IP" 50000 "$GIT_Y2JB_DIR/payloads/lapse.js"
+python3 "$GIT_Y2JB_DIR/payload_sender.py" "$PS5_IP" "$PS5_EXPLOIT_PORT" "$GIT_Y2JB_DIR/payloads/lapse.js"
 
 # Wait for a few seconds to ensure the exploit is processed
 sleep 5
 
 # Send the HEN payload
-python3 "$GIT_Y2JB_DIR/payload_sender.py" "$PS5_IP" 9021 "$PS5_HEN_DIR/251111 etaHEN-2.3B.bin"
+python3 "$GIT_Y2JB_DIR/payload_sender.py" "$PS5_IP" "$PS5_HEN_PORT" "$HEN_FILE"
 
 
-
-
-
-
-
-### HOW TO SETUP THE FIRST TIME
-# Install the modified Youtube app.
-	# Options: a) Restore console from Y2JB.
-	# b) get download0.dat (336 MB) from ps5_y2jb_autoloader and place it in /user/download/PPSA01650. This will update the current Youtube app. But remember!
-
-# modify /system_data/priv/mms/appinfo.db with the python software given by Y2JB, to prevent youtube to update itself. command: python3 appinfo_editor.py
-
-# Youtube app running app: /mnt/sandbox/PPSA01650_000/download0/cache/splash_screen . Before modifying, make permission of download0 to 777 recursively. And then copy everything in ahR0blablablablabla folder from the autoloader. After that, set splash.html to 444 permission.
-
-# optional: ps5_autoloader folder put in /data

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# This jailbreak uploads download0.dat to /user/download/PPSA01650 to update Youtube app with autoloader files. This is slower than modifying sandbox folder directly (ps5_jb_autoload.sh).
-# This jailbreak enables autoloader.
+# This jailbreak enables autoloader by uploading download0.dat to /user/download/PPSA01650 to update Youtube app with autoloader files.
+# The process of uploading download0.dat via FTP is slow (compared to ps5_jb_autoload.sh), but simple to implement.
 
 # This jailbreak does:
 # 1) Prerequisite: Install the modified Youtube app by restoring console from Y2JB backup.
@@ -23,19 +23,21 @@ DOWNLOAD0_URL="https://github.com/itsPLK/ps5_y2jb_autoloader/releases/download/v
 # PS5 FTP folders
 PS5_IP="192.168.14.158"
 PS5_FTP_PORT=1337
+PS5_EXPLOIT_PORT=50000
+PS5_HEN_PORT=9021
 
 # Derived folders
 HEN_FILE="$WORK_DIR/$(basename "$HEN_URL")"
 DOWNLOAD0_FILE="$WORK_DIR/$(basename "$DOWNLOAD0_URL")"
 
 # Send the lapse exploit payload
-python3 "$GIT_Y2JB_REPO/payload_sender.py" "$PS5_IP" 50000 "$GIT_Y2JB_REPO/payloads/lapse.js"
+python3 "$GIT_Y2JB_REPO/payload_sender.py" "$PS5_IP" "$PS5_EXPLOIT_PORT" "$GIT_Y2JB_REPO/payloads/lapse.js"
 
 # Wait for a few seconds to ensure the exploit is processed
 sleep 5
 
 # Send the HEN payload
-python3 "$GIT_Y2JB_REPO/payload_sender.py" "$PS5_IP" 9021 "$HEN_FILE"
+python3 "$GIT_Y2JB_REPO/payload_sender.py" "$PS5_IP" "$PS5_HEN_PORT" "$HEN_FILE"
 
 # Get a pop up to inform the user that the initialization is complete.
 zenity --info --text="Wait until etaHEN is loaded (it will report IP, FTP, and KLog).\nAnd then click OK." --title="PS5 Jailbreak Initialized"
