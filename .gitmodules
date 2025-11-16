@@ -1,0 +1,6 @@
+[submodule "github-Y2JB"]
+	path = github-Y2JB
+	url = https://github.com/Gezine/Y2JB.git
+[submodule "github-ps5_y2jb_autoloader"]
+	path = github-ps5_y2jb_autoloader
+	url = https://github.com/itsPLK/ps5_y2jb_autoloader.git
